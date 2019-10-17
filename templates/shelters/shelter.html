@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | {{ shelter.name }} {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">{{ shelter.name }}</h1>
+          <p class="lead">
+            <i class="fas fa-map-marker"></i> {{ shelter.state }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'shelters' %}">Shelters</a>
+          </li>
+          <li class="breadcrumb-item active">{{ shelter.name }}</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Shelter -->
+  <section id="listing" class="py-4">
+    <div class="container">
+      <a href="{% url 'shelters' %}" class="btn btn-light mb-4">Back To Shelters</a>
+      <div class="row">
+        <div class="col-md-9">
+          <!-- Shelter Main Image -->
+          <img src="{{ shelter.photo.url }}" alt="" class="img-main img-fluid mb-3">
+        </div>
+        <div class="col-md-3">
+            <h5>You can find {{ shelter.name }} here : </h5>
+            <div class="embed-responsive embed-responsive-1by1 mt-4">
+              {{ shelter.maplink | safe }}
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pets -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <h4>Pets Available Here:</h4>
+      <div class="row mt-3">
+        {% if pets %}
+
+          {% for pet in pets %}
+            <!-- Pet 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview" style="background-color: #F1FAEE">
+                <img class="card-img-top" src="{{ pet.photo.url }}" alt="">
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-info">{{ pet.name }}</h4>
+                    <p class="text-secondary">
+                      <i class="fas fa-map-marker-alt"></i> {{ pet.state }}</p>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-th-large"></i> Breed: {{ pet.breed }}</div>
+                  </div>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-car"></i> Age: {{ pet.dob | timesince }}</div>
+                  </div>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-bed"></i> Sex: {{ pet.sex }}</div>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-user"></i> {{ pet.shelter }}</div>
+                  </div>
+                  <div class="row text-dark pb-2">
+                    <div class="col-12 mt-2">
+                      <i class="fas fa-clock"></i> Posted: {{ pet.list_date | timesince }} ago</div>
+                  </div>
+                  <hr>
+                  <a href="{% url 'pet' pet.id %}" class="btn btn-info btn-block">More Info</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Pets Available</p>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          {% if pets.has_other_pages %}
+            <ul class="pagination">
+              {% if pets.has_previous %}
+                <li class="page-item">
+                  <a href="?page={{pets.previous_page_number}}" class="page-link">&laquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link">&laquo;</a>
+                </li>
+              {% endif %}
+              {% for i in pets.paginator.page_range %}
+                {% if pets.number == i %}
+                  <li class="page-item active">
+                    <a class="page-link">{{i}}</a>
+                  </li>
+                {% else %}
+                  <li class="page-item">
+                    <a href="?page={{i}}" class="page-link">{{i}}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+              {% if pets.has_next %}
+                <li class="page-item">
+                  <a href="?page={{pets.next_page_number}}" class="page-link">&raquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link">&raquo;</a>
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

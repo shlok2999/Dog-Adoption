@@ -1,0 +1,78 @@
+{% extends 'base.html' %} 
+
+{% load humanize %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content %}
+<!-- Showcase -->
+<section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            Pet Adoption Just Got So Easy
+          </h1>
+          <p class="lead">Hundreds of pets are abandoned and rescued in India everyday. Although there are many wonderful souls across the nation who work extra hours and put in efforts beyond their capacity, there is always a shortage of funding and communication across the animal activist circuit.<br><br> Our goal is to find these abandoned pets a new home! 
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+<br>
+  <!-- Alerts -->
+  {% include 'partials/_alerts.html' %}
+
+  <!-- Pets -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <div class="row">
+        {% if pets %}
+          {% for pet in pets %}
+            <!-- Pet 1 -->
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card listing-preview" style="background-color: #F1FAEE">
+                <img class="card-img-top" src="{{ pet.photo.url }}" alt="">
+                <div class="card-body">
+                  <div class="listing-heading text-center">
+                    <h4 class="text-info">{{ pet.name }}</h4>
+                    <p class="text-secondary">
+                      <i class="fas fa-map-marker-alt"></i> {{ pet.state }}</p>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-th-large"></i> Breed: {{ pet.breed }}</div>
+                  </div>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-car"></i> Age: {{ pet.dob | timesince }}</div>
+                  </div>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-bed"></i> Sex: {{ pet.sex }}</div>
+                  </div>
+                  <hr>
+                  <div class="row py-2 text-dark">
+                    <div class="col-12">
+                      <i class="fas fa-user"></i> {{ pet.shelter }}</div>
+                  </div>
+                  <div class="row text-dark pb-2">
+                    <div class="col-12 mt-2">
+                      <i class="fas fa-clock"></i> Posted: {{ pet.list_date | timesince }} ago</div>
+                  </div>
+                  <hr>
+                  <a href="{% url 'pet' pet.id %}" class="btn btn-info btn-block">More Info</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">
+            <p>No Pets Available</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

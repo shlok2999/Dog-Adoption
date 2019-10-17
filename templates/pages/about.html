@@ -1,0 +1,53 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block title %} | About Us {% endblock %}
+
+{% block content %}
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">About Dog Adopt</h1>
+          <!-- <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt, pariatur!</p> -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'home' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> About</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="about" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>We Help Abandoned dogs find a new home</h2>
+          <!-- <img src="{% static 'img/about.jpg' %}" alt=""> -->
+          <p class="mt-4">Following is the procedure to adopt a pet using our website: </p>
+          <ul>
+            <li><strong>Research Breeds.</strong> Different dog breeds have different personalities and different needs. Research different breed types and find the breeds that you will best be able to care for. Using the search feature on our website you can search for dogs based on breed and the location of the shelter where the dog is currently being taken care of. You can even look up for the various dogs up for adoption in a particular shelter.</li>
+            <li><strong>Make an enquiry.</strong> You like a dog, you hit the Adopt Now button. Next, an enquiry form will open up, with all your details pre-filled, you just need to submit it. (For this to work, you need to be logged in first!). An email will be sent to you and the shelter, with your response.</li>
+            <li><strong>Wait for shelter to contact.</strong> A shelter representative will contact you over email, and list out the various needs of the dog you're interested in, the required environment, food, how to take care of him/her, and even a copy of the adoption form, just to give an idea how it looks like.</li>
+            <li><strong>Visit the shelter.</strong> After understanding the various needs and behaviour of the dog, if you're still interested, you should complete this final step by visiting the shelter, and bringing the pet home.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  
+{% endblock %}
